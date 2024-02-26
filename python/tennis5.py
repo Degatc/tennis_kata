@@ -2,7 +2,7 @@
 
 class TennisGame5:
     def __init__(self, player1Name, player2Name):
-        # Stockés directement dans l'instance de classe
+        # Noms des joueurs stockés directement dans l'instance de classe
         self.player1Name = player1Name
         self.player2Name = player2Name
         # Initialisation à 0

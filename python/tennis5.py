@@ -2,28 +2,37 @@
 
 class TennisGame5:
     def __init__(self, player1Name, player2Name):
+        # Stockés directement dans l'instance de classe
         self.player1Name = player1Name
         self.player2Name = player2Name
+        # Initialisation à 0
         self.player1Score = 0
         self.player2Score = 0
 
     def won_point(self, playerName):
+        # Chaînes de caractères pour identifier les joueurs
+        # => Variables globales ou des attributs de classe
         if (playerName == "player1"):
             self.player1Score += 1
         elif (playerName == "player2"):
             self.player2Score += 1
         else:
+            # Message explicite
             raise ValueError("Invalid player name.")
 
     def score(self):
         p1 = self.player1Score
         p2 = self.player2Score
 
+        # Boucle while pas nécessaire, le résultat final reste le même
+        # => Conditions plus simples
         while (p1 > 4 or p2 > 4):
             p1 -= 1
             p2 -= 1
 
         lookup = {
+            # Scores associés à des chaînes de caractères directement dans le dictionnaire
+            # => Variables ou constantes
             (0, 0): "Love-All",
             (0, 1): "Love-Fifteen",
             (0, 2): "Love-Thirty",
@@ -55,4 +64,5 @@ class TennisGame5:
         if (entry in lookup):
             return lookup[entry]
         else:
+            # Message explicite
             raise ValueError("Invalid score.")

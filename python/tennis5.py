@@ -2,10 +2,8 @@
 
 class TennisGame5:
     def __init__(self, player1Name, player2Name):
-        # Noms des joueurs stockés directement dans l'instance de classe
         self.player1Name = player1Name
         self.player2Name = player2Name
-        # Initialisation à 0
         self.player1Score = 0
         self.player2Score = 0
 
@@ -21,6 +19,7 @@ class TennisGame5:
             raise ValueError("Invalid player name.")
 
     def score(self):
+        # Revoir le nommage des variables
         p1 = self.player1Score
         p2 = self.player2Score
 

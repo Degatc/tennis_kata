@@ -17,4 +17,6 @@ Utilisation de variables pour les conditions de victoire ou d'avantage :
 
 Les conditions de victoire ou d'avantage ont été remplacées par des variables. Par exemple, au lieu de "Win for player1", on a maintenant "Win for " + self.player1Name. Cela rend le code plus générique et adaptable à différents joueurs.
 
+Pour le projet en générale le code brut, le prototype, à été segmenter en classe qui interagissent entre elle afin de facilité les interaction et la maintenabilité.
+
 En résumé, ces modifications améliorent la lisibilité, la modularité et l'efficacité du code, tout en réduisant les risques d'erreurs et en le rendant plus flexible.

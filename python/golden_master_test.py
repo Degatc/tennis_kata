@@ -10,8 +10,8 @@ class GoldenMasterTest(unittest.TestCase):
 
     # Utilisation de TennisGame5
     @staticmethod
-    def play_game(p1Points, p2Points, p1Name, p2Name):
-        game = TennisGame5(p1Name, p2Name)
+    def play_game(p1Points, p2Points, p1Name, p2Name, language):
+        game = TennisGame5(p1Name, p2Name, language)
         for i in range(max(p1Points, p2Points)):
             if i < p1Points:
                 game.won_point(p1Name)
@@ -19,27 +19,29 @@ class GoldenMasterTest(unittest.TestCase):
                 game.won_point(p2Name)
         return game.score()
 
-    def make_file_name(self, score_player_1, score_player_2):
-        return os.path.join(self.DIR, f"{score_player_1}_{score_player_2}.txt")
+    def make_file_name(self, language, score_player_1, score_player_2):
+        return os.path.join(self.DIR, f"{language}_{score_player_1}_{score_player_2}.txt")
 
     def test_record(self):
-        for score_player_1 in range(5):
-            for score_player_2 in range(5):
-                with self.subTest(f"{score_player_1}, {score_player_2}"):
-                    sortie = self.play_game(score_player_1, score_player_2, "player1", "player2")
-                    file_path = self.make_file_name(score_player_1, score_player_2)
-                    with open(file_path, "w") as file:
-                        file.writelines(sortie)
+        languages = ["fr", "en"]
+        for language in languages:
+            for score_player_1 in range(5):
+                for score_player_2 in range(5):
+                    with self.subTest(f"{score_player_1}, {score_player_2}"):
+                        sortie = self.play_game(score_player_1, score_player_2, "player1", "player2", language)
+                        file_path = self.make_file_name(language, score_player_1, score_player_2)
+                        with open(file_path, "w") as file:
+                            file.writelines(sortie)
 
     def test_replay(self):
-        for score_player_1 in range(5):
-            for score_player_2 in range(5):
-                with self.subTest(f"{score_player_1}, {score_player_2}"):
-                    sortie = self.play_game(score_player_1, score_player_2, "player1", "player2")
-                    file_path = self.make_file_name(score_player_1, score_player_2)
-                    with open(file_path, "r") as file:
-                        attendu = file.read()
-                    self.assertEqual(attendu, sortie)
+        languages = ["fr", "en"]
+        for language in languages:
+            for score_player_1 in range(5):
+                for score_player_2 in range(5):
+                    with self.subTest(f"{score_player_1}, {score_player_2}"):
+                        sortie = self.play_game(score_player_1, score_player_2, "player1", "player2", language)
+                        file_path = self.make_file_name(language, score_player_1, score_player_2)
+                        with open(file_path, "r") as file:
+                            attendu = file.read()
+                        self.assertEqual(attendu, sortie)
 
-if __name__ == "__main__":
-    unittest.main()

@@ -1,92 +1,65 @@
 # -*- coding: utf-8 -*-
 
+class Player:
+    def __init__(self, name):
+        self.name = name
+        self.score = 0  # Chaque joueur commence avec un score de 0
+
 class TennisGame5:
-    def __init__(self, player1Name, player2Name, language):
-        self.player1Name = player1Name
-        self.player2Name = player2Name
-        self.player1Score = 0
-        self.player2Score = 0
+    def __init__(self, player1_name, player2_name, language):
+        self.player1 = Player(player1_name)  # Création d'une instance de Player
+        self.player2 = Player(player2_name)  # Création d'une autre instance de Player
         self.language = language
-        self.lookup_english = {
-            (0, 0): "Love-All",
-            (0, 1): "Love-Fifteen",
-            (0, 2): "Love-Thirty",
-            (0, 3): "Love-Forty",
-            (1, 0): "Fifteen-Love",
-            (1, 1): "Fifteen-All",
-            (1, 2): "Fifteen-Thirty",
-            (1, 3): "Fifteen-Forty",
-            (2, 0): "Thirty-Love",
-            (2, 1): "Thirty-Fifteen",
-            (2, 2): "Thirty-All",
-            (2, 3): "Thirty-Forty",
-            (3, 0): "Forty-Love",
-            (3, 1): "Forty-Fifteen",
-            (3, 2): "Forty-Thirty",
-            (3, 3): "Deuce",
-            (4, 0): "Win for " + self.player1Name,
-            (4, 1): "Win for " + self.player1Name,
-            (4, 2): "Win for " + self.player1Name,
-            (4, 3): "Advantage " + self.player1Name,
-            (0, 4): "Win for " + self.player2Name,
-            (1, 4): "Win for " + self.player2Name,
-            (2, 4): "Win for " + self.player2Name,
-            (3, 4): "Advantage " + self.player2Name,
-            (4, 4): "Deuce",
-        }
-        self.lookup_french = {
-            (0, 0): "Zéro-Partout",
-            (0, 1): "Zéro-Quinze",
-            (0, 2): "Zéro-Trente",
-            (0, 3): "Zéro-Quarante",
-            (1, 0): "Quinze-Zéro",
-            (1, 1): "Quinze-Partout",
-            (1, 2): "Quinze-Trente",
-            (1, 3): "Quinze-Quarante",
-            (2, 0): "Trente-Zéro",
-            (2, 1): "Trente-Quinze",
-            (2, 2): "Trente-Partout",
-            (2, 3): "Trente-Quarante",
-            (3, 0): "Quarante-Zéro",
-            (3, 1): "Quarante-Quinze",
-            (3, 2): "Quarante-Trente",
-            (3, 3): "Égalité",
-            (4, 0): "Victoire pour " + self.player1Name,
-            (4, 1): "Victoire pour " + self.player1Name,
-            (4, 2): "Victoire pour " + self.player1Name,
-            (4, 3): "Avantage " + self.player1Name,
-            (0, 4): "Victoire pour " + self.player2Name,
-            (1, 4): "Victoire pour " + self.player2Name,
-            (2, 4): "Victoire pour " + self.player2Name,
-            (3, 4): "Avantage " + self.player2Name,
-            (4, 4): "Égalité",
+        # Init traductions des scores pour les différentes langues
+        self.lookup = self.initialize_lookup()
+
+    def initialize_lookup(self):
+        # Dictionnaire scores en anglais et en français
+        return {
+            'en': {
+                (0, 0): "Love-All", (0, 1): "Love-Fifteen", (0, 2): "Love-Thirty", (0, 3): "Love-Forty",
+                (1, 0): "Fifteen-Love", (1, 1): "Fifteen-All", (1, 2): "Fifteen-Thirty", (1, 3): "Fifteen-Forty",
+                (2, 0): "Thirty-Love", (2, 1): "Thirty-Fifteen", (2, 2): "Thirty-All", (2, 3): "Thirty-Forty",
+                (3, 0): "Forty-Love", (3, 1): "Forty-Fifteen", (3, 2): "Forty-Thirty", (3, 3): "Deuce",
+                (4, 4): "Deuce"
+            },
+            'fr': {
+                (0, 0): "Zéro-Partout", (0, 1): "Zéro-Quinze", (0, 2): "Zéro-Trente", (0, 3): "Zéro-Quarante",
+                (1, 0): "Quinze-Zéro", (1, 1): "Quinze-Partout", (1, 2): "Quinze-Trente", (1, 3): "Quinze-Quarante",
+                (2, 0): "Trente-Zéro", (2, 1): "Trente-Quinze", (2, 2): "Trente-Partout", (2, 3): "Trente-Quarante",
+                (3, 0): "Quarante-Zéro", (3, 1): "Quarante-Quinze", (3, 2): "Quarante-Trente", (3, 3): "Égalité",
+                (4, 4): "Égalité"
+            }
         }
 
-    def won_point(self, playerName):
-        if playerName == self.player1Name:
-            self.player1Score += 1
-        elif playerName == self.player2Name:
-            self.player2Score += 1
+    def won_point(self, player_name):
+        if player_name == self.player1.name:
+            self.player1.score += 1
+        elif player_name == self.player2.name:
+            self.player2.score += 1
         else:
             raise ValueError("Invalid player name.")
 
     def score(self):
-        player1Score = self.player1Score
-        player2Score = self.player2Score
+        score1 = self.player1.score
+        score2 = self.player2.score
 
-        if player1Score > 4 or player2Score > 4:
-            player1Score = 4
-            player2Score = 4
+        if score1 >= 4 or score2 >= 4:
+            diff = score1 - score2
+            if diff == 0:
+                return self.lookup[self.language][(4, 4)]
+            elif diff == 1:
+                return f"Advantage {self.player1.name}"
+            elif diff == -1:
+                return f"Advantage {self.player2.name}"
+            elif diff >= 2:
+                return f"Win for {self.player1.name}"
+            else:
+                return f"Win for {self.player2.name}"
 
-        if self.language == 'en':
-            lookup = self.lookup_english
-        elif self.language == 'fr':
-            lookup = self.lookup_french
-        else:
-            raise ValueError("Language not supported.")
+        return self.lookup[self.language][(score1, score2)]
 
-        entry = (player1Score, player2Score)
-        if entry in lookup:
-            return lookup[entry]
-        else:
-            raise ValueError("Invalid score.")
+# Utilisation de la classe
+game = TennisGame5("Alice", "Bob", "en")
+game.won_point("Alice")
+print(game.score())  # Affichera le score après qu'Alice a marqué un point
